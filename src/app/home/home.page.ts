@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { IonicModule } from '@ionic/angular';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,10 @@ import { CommonModule } from '@angular/common';
 // Icons
 import { addIcons } from 'ionicons';
 import { moonOutline, heartOutline } from 'ionicons/icons';
+
+// API 
+import { ApiService } from '../services/api.service';
+
 
 @Component({
   selector: 'app-home',
@@ -16,21 +20,22 @@ import { moonOutline, heartOutline } from 'ionicons/icons';
 })
 
 // Home Page Layout
-export class HomePage {
+export class HomePage implements OnInit {
 
   searchTerm: string = '';
+  movies: any[] = [];
 
-  dummyMovies = [
-    { title: 'Movie 1', description: 'This is a short description...' },
-    { title: 'Movie 2', description: 'Another movie description...' },
-    { title: 'Movie 3', description: 'More placeholder text...' },
-    { title: 'Movie 4', description: 'More placeholder text...' }
-  ];
-
-  constructor() {
+  constructor(private apiService: ApiService) {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline
+    });
+  }
+
+  ngOnInit() {
+    this.apiService.getTrendingMovies().subscribe((data: any) => {
+      this.movies = data.results;
+      console.log(this.movies);
     });
   }
 

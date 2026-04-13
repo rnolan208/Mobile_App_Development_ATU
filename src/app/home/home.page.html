@@ -32,12 +32,12 @@
   <!-- Section Title -->
   <h2>Today's Trending Movies</h2>
 
-  <!-- Movie Grid (placeholder for now to check if layout working) -->
+  <!-- Movie Grid (info imported with API from TMDB) -->
   <div class="movie-grid">
-    <div class="movie-tile" *ngFor="let movie of dummyMovies">
-      <img src="https://via.placeholder.com/150" />
+    <div class="movie-tile" *ngFor="let movie of movies">
+      <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
       <h3>{{ movie.title }}</h3>
-      <p>{{ movie.description }}</p>
+      <p>{{ movie.overview | slice:0:100 }}...</p>
     </div>
   </div>
 
