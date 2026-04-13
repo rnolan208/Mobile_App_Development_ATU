@@ -1,20 +1,44 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>
-      Blank
+    <ion-title class="ion-text-center">
+      G00474404
     </ion-title>
+
+    <ion-buttons slot="end">
+      <!-- Dark Mode Toggle -->
+      <ion-button (click)="toggleDarkMode()">
+        <ion-icon name="moon-outline"></ion-icon>
+      </ion-button>
+
+      <!-- Favourites -->
+       <ion-button routerLink="/favourites">
+        <ion-icon name="heart-outline"></ion-icon>
+       </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
 
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
+<ion-content class="ion-padding">
+
+  <!-- Search Bar -->
+  <ion-searchbar 
+    placeholder="Search movies..."
+    [(ngModel)]="searchTerm"
+    (ionInput)="onSearch()">
+  </ion-searchbar>
+
+  <!-- Section Title -->
+  <h2>Today's Trending Movies</h2>
+
+  <!-- Movie Grid (placeholder for now to check if layout working) -->
+  <div class="movie-grid">
+    <div class="movie-tile" *ngFor="let movie of dummyMovies">
+      <img src="https://via.placeholder.com/150" />
+      <h3>{{ movie.title }}</h3>
+      <p>{{ movie.description }}</p>
+    </div>
   </div>
+
 </ion-content>
