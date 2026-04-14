@@ -29,29 +29,77 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding">
+<ion-content class="ion-padding full-height">
 
-  <img 
-    *ngIf="movie?.poster_path"
-    [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
-  />
+  <ion-grid class="full-height">
 
-  <h2>{{ movie?.title }}</h2>
+    <ion-row class="stretch-row full-height">
 
-  <p>{{ movie?.overview }}</p>
+      <!-- LEFT SIDE -->
+      <ion-col size="12" size-md="4">
 
-  <h3>Cast</h3>
-  <ul>
-    <li *ngFor="let person of cast">
-      {{ person.name }} as {{ person.character }}
-    </li>
-  </ul>
+        <ion-card class="left-card">
+          <img *ngIf="movie?.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
 
-  <h3>Crew</h3>
-  <ul>
-    <li *ngFor="let person of crew">
-      {{ person.name }} - {{ person.job }}
-    </li>
-  </ul>
+          <ion-card-header>
+            <ion-card-title>{{ movie?.title }}</ion-card-title>
+          </ion-card-header>
+        </ion-card>
+
+      </ion-col>
+
+      <!-- RIGHT SIDE -->
+      <ion-col size="12" size-md="8">
+
+        <div class="right-panel">
+          <!-- Description -->
+          <ion-card class="flex-item">
+            <ion-card-header>
+              <ion-card-title>Overview</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              {{ movie?.overview }}
+            </ion-card-content>
+          </ion-card>
+
+          <!-- Favourite Button -->
+          <ion-button (click)="toggleFavourite()" expand="block" color="danger">
+            <ion-icon [name]="isFavourite ? 'heart' : 'heart-outline'" slot="start">
+            </ion-icon>
+            {{ isFavourite ? 'Remove from Favourites' : 'Add to Favourites' }}
+          </ion-button>
+
+          <!-- Cast -->
+          <ion-card class="flex-item">
+            <ion-card-header>
+              <ion-card-title>Cast</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <ion-chip *ngFor="let person of cast">
+                {{ person.name }}
+              </ion-chip>
+            </ion-card-content>
+          </ion-card>
+
+          <!-- Crew -->
+          <ion-card class="flex-item">
+            <ion-card-header>
+              <ion-card-title>Crew</ion-card-title>
+            </ion-card-header>
+
+            <ion-card-content>
+              <ion-chip *ngFor="let person of crew">
+                {{ person.name }} ({{ person.job }})
+              </ion-chip>
+            </ion-card-content>
+          </ion-card>
+        </div>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
 
 </ion-content>

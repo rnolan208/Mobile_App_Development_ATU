@@ -1,0 +1,66 @@
+ion-content {
+  --overflow: auto;
+}
+
+/* Desktop-only full screen layout */
+@media (min-width: 992px) {
+  ion-content {
+    --overflow: hidden;
+  }
+
+  .stretch-row {
+    height: 100%;
+    align-items: stretch;
+  }
+
+  .right-panel {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .flex-item {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* Tablet screen layout */
+@media (min-width: 768px) and (max-width: 991px) {
+  .right-panel {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .flex-item {
+    flex: unset; 
+  }
+
+  ion-content {
+    --overflow: auto;
+  }
+}
+
+/* Mobile screen layout */
+@media (max-width: 767px) {
+
+  ion-col {
+    flex: 0 0 100%;
+    max-width: 100%;
+  }
+
+  .stretch-row {
+    height: auto;
+  }
+
+  .right-panel {
+    display: block;
+  }
+
+  ion-content {
+    --overflow: auto;
+  }
+}
