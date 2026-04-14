@@ -11,9 +11,9 @@
       </ion-button>
 
       <!-- Favourites -->
-       <ion-button routerLink="/favourites">
+      <ion-button routerLink="/favourites">
         <ion-icon name="heart-outline"></ion-icon>
-       </ion-button>
+      </ion-button>
     </ion-buttons>
 
   </ion-toolbar>
@@ -23,21 +23,34 @@
 <ion-content class="ion-padding">
 
   <!-- Search Bar -->
-  <ion-searchbar 
-    placeholder="Search movies..."
-    [(ngModel)]="searchTerm"
-    (ionInput)="onSearch()">
-  </ion-searchbar>
+  <div class="search-container">
+
+    <ion-searchbar placeholder="Search movies..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
+    </ion-searchbar>
+
+    <ion-button (click)="onSearch()" shape="round">
+      <ion-icon name="search-outline"></ion-icon>
+    </ion-button>
+
+  </div>
 
   <!-- Section Title -->
-  <h2>Today's Trending Movies</h2>
+  <h2>{{ pageTitle }}</h2>
 
   <!-- Movie Grid (info imported with API from TMDB) -->
   <div class="movie-grid">
     <div class="movie-tile" *ngFor="let movie of movies">
-      <img [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
+
+      <img [src]="movie.poster_path 
+        ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path 
+        : 'https://via.placeholder.com/150'" />
+
       <h3>{{ movie.title }}</h3>
-      <p>{{ movie.overview | slice:0:100 }}...</p>
+
+      <p>
+        {{ movie.overview ? (movie.overview | slice:0:100) + '...' : 'No description available' }}
+      </p>
+
     </div>
   </div>
 

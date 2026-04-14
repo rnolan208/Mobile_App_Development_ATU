@@ -18,4 +18,10 @@ export class ApiService {
     );
   }
 
+  searchMovies(query: string) {
+  return this.http.get(
+    `${this.baseUrl}/search/movie?api_key=${this.apiKey}&query=${query}`
+  );
+}
+
 }

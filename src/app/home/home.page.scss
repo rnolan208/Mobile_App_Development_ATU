@@ -33,3 +33,15 @@
   text-overflow: ellipsis;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
+
+/* Search Bar */
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+ion-searchbar {
+  flex: 1;
+}

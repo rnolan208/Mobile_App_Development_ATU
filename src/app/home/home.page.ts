@@ -5,7 +5,7 @@ import { CommonModule } from '@angular/common';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, searchOutline } from 'ionicons/icons';
 
 // API 
 import { ApiService } from '../services/api.service';
@@ -24,11 +24,13 @@ export class HomePage implements OnInit {
 
   searchTerm: string = '';
   movies: any[] = [];
+  pageTitle: string = "Today's Trending Movies";
 
   constructor(private apiService: ApiService) {
     addIcons({
       'moon-outline': moonOutline,
-      'heart-outline': heartOutline
+      'heart-outline': heartOutline,
+      'search-outline': searchOutline
     });
   }
 
@@ -47,8 +49,24 @@ export class HomePage implements OnInit {
 
   /* For Search Function */
   onSearch() {
-    console.log("Searching:", this.searchTerm);
+  if (this.searchTerm && this.searchTerm.trim() !== '') {
+
+    this.pageTitle = `Search Results for "${this.searchTerm}"`; // update title with whats been searched
+
+    this.apiService.searchMovies(this.searchTerm).subscribe((data: any) => {
+      this.movies = data.results;
+    });
+
+  } else {
+
+    this.pageTitle = "Today's Trending Movies"; // reset title to original
+
+    this.apiService.getTrendingMovies().subscribe((data: any) => {
+      this.movies = data.results;
+    });
+
   }
+}
 
 }
 
