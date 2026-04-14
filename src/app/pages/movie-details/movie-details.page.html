@@ -1,13 +1,57 @@
-<ion-header [translucent]="true">
+<ion-header>
   <ion-toolbar>
-    <ion-title>movie-details</ion-title>
+
+    <!-- Back Button -->
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <!-- Title -->
+    <ion-title class="ion-text-center">
+      {{ movie?.title }}
+    </ion-title>
+
+    <!-- Right Side Buttons -->
+    <ion-buttons slot="end">
+
+      <!-- Dark Mode -->
+      <ion-button (click)="toggleDarkMode()">
+        <ion-icon name="moon-outline"></ion-icon>
+      </ion-button>
+
+      <!-- Favourites -->
+      <ion-button routerLink="/favourites">
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-button>
+
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">movie-details</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+
+  <img 
+    *ngIf="movie?.poster_path"
+    [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path"
+  />
+
+  <h2>{{ movie?.title }}</h2>
+
+  <p>{{ movie?.overview }}</p>
+
+  <h3>Cast</h3>
+  <ul>
+    <li *ngFor="let person of cast">
+      {{ person.name }} as {{ person.character }}
+    </li>
+  </ul>
+
+  <h3>Crew</h3>
+  <ul>
+    <li *ngFor="let person of crew">
+      {{ person.name }} - {{ person.job }}
+    </li>
+  </ul>
+
 </ion-content>
