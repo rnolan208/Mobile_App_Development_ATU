@@ -24,4 +24,18 @@ export class ApiService {
   );
 }
 
+// Get movie -> details
+getMovieDetails(id: string) {
+  return this.http.get(
+    `${this.baseUrl}/movie/${id}?api_key=${this.apiKey}`
+  );
+}
+
+// Get movie -> creditsc, cast, crew members
+getMovieCredits(id: string) {
+  return this.http.get(
+    `${this.baseUrl}/movie/${id}/credits?api_key=${this.apiKey}`
+  );
+}
+
 }

@@ -39,7 +39,7 @@
 
   <!-- Movie Grid (info imported with API from TMDB) -->
   <div class="movie-grid">
-    <div class="movie-tile" *ngFor="let movie of movies">
+    <div class="movie-tile" *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]">
 
       <img [src]="movie.poster_path 
         ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path 
