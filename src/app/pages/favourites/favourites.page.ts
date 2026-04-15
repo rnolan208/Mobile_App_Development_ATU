@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-favourites',
@@ -18,17 +18,20 @@ import { moonOutline, heartOutline, heart } from 'ionicons/icons';
 export class FavouritesPage implements OnInit {
 
   favourites: any[] = [];
+  sortOption: string = 'default';
 
   constructor() {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline,
       'heart': heart,
+      'home-outline': homeOutline,
     });
   }
 
   ngOnInit() {
-    this.loadFavourites()
+    this.loadFavourites();
+    this.sortMovies();
   }
 
   ionViewWillEnter() {
@@ -52,6 +55,26 @@ export class FavouritesPage implements OnInit {
   /* For applying Dark Mode Toggle */
   toggleDarkMode() {
     document.body.classList.toggle('dark');
+  }
+
+  /* For Sorting Option */
+  sortMovies() {
+
+    if (this.sortOption === 'az') {
+      this.favourites.sort((a, b) => a.title.localeCompare(b.title));
+    }
+
+    if (this.sortOption === 'za') {
+      this.favourites.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
+    if (this.sortOption === 'dateAsc') {
+      this.favourites.sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime());
+    }
+
+    if (this.sortOption === 'dateDesc') {
+      this.favourites.sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
+    }
   }
 
 }

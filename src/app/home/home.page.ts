@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, searchOutline, heart } from 'ionicons/icons';
+import { moonOutline, heartOutline, searchOutline, heart, homeOutline } from 'ionicons/icons';
 
 // API 
 import { ApiService } from '../services/api.service';
@@ -26,13 +26,15 @@ export class HomePage implements OnInit {
   searchTerm: string = '';
   movies: any[] = [];
   pageTitle: string = "Today's Trending Movies";
+  sortOption: string = 'default';
 
   constructor(private apiService: ApiService) {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline,
       'search-outline': searchOutline,
-      'heart': heart
+      'heart': heart,
+      'home-outline': homeOutline,
     });
   }
 
@@ -40,6 +42,7 @@ export class HomePage implements OnInit {
     this.apiService.getTrendingMovies().subscribe((data: any) => {
       this.movies = data.results;
       console.log(this.movies);
+      this.sortMovies();
     });
   }
 
@@ -83,6 +86,7 @@ export class HomePage implements OnInit {
 
       this.apiService.searchMovies(this.searchTerm).subscribe((data: any) => {
         this.movies = data.results;
+        this.sortMovies();
       });
 
     } else {
@@ -91,8 +95,29 @@ export class HomePage implements OnInit {
 
       this.apiService.getTrendingMovies().subscribe((data: any) => {
         this.movies = data.results;
+        this.sortMovies();
       });
 
+    }
+  }
+
+  /* For Sorting Search Option */
+  sortMovies() {
+
+    if (this.sortOption === 'az') {
+      this.movies.sort((a, b) => a.title.localeCompare(b.title));
+    }
+
+    if (this.sortOption === 'za') {
+      this.movies.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
+    if (this.sortOption === 'dateAsc') {
+      this.movies.sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime());
+    }
+
+    if (this.sortOption === 'dateDesc') {
+      this.movies.sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
     }
   }
 

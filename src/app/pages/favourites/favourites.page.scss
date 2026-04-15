@@ -40,3 +40,22 @@
   text-overflow: ellipsis;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
+
+/* Sort By Layout */
+
+.sort-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+.sort-label {
+  font-size: 0.9em;
+  color: grey;
+}
+
+ion-select {
+  max-width: 150px;
+}

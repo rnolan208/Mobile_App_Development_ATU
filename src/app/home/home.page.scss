@@ -55,3 +55,21 @@ ion-searchbar {
 ion-header {
   backdrop-filter: blur(10px);
 }
+
+/* Sort By Layout */
+
+.sort-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 10px;
+}
+
+.sort-label {
+  font-size: 0.9em;
+  color: grey;
+}
+
+ion-select {
+  max-width: 150px;
+}

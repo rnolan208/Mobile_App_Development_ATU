@@ -1,10 +1,14 @@
 <ion-header>
   <ion-toolbar>
 
+    <!-- Home Button -->
     <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home"></ion-back-button>
+      <ion-button routerLink="/home">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
 
+    <!-- Title -->
     <ion-title>{{ person?.name }}</ion-title>
 
     <ion-buttons slot="end">

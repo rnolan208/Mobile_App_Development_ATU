@@ -1,5 +1,14 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+
+    <!-- Home Button -->
+    <ion-buttons slot="start">
+      <ion-button routerLink="/home">
+        <ion-icon name="home-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
+    <!-- Title -->
     <ion-title class="ion-text-center">
       G00474404
     </ion-title>
@@ -28,6 +37,21 @@
       <ion-button (click)="onSearch()" shape="round">
         <ion-icon name="search-outline"></ion-icon>
       </ion-button>
+
+    </div>
+
+    <!-- Sort Options -->
+    <div class="sort-container">
+
+      <span class="sort-label">Sort:</span>
+
+      <ion-select [(ngModel)]="sortOption" (ionChange)="sortMovies()" interface="popover">
+        <ion-select-option value="default">Default</ion-select-option>
+        <ion-select-option value="az">A → Z</ion-select-option>
+        <ion-select-option value="za">Z → A</ion-select-option>
+        <ion-select-option value="dateAsc">Oldest</ion-select-option>
+        <ion-select-option value="dateDesc">Newest</ion-select-option>
+      </ion-select>
 
     </div>
 

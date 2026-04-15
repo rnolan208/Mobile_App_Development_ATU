@@ -9,7 +9,7 @@ import { ApiService } from '../../services/api.service';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-movie-details',
@@ -31,7 +31,8 @@ export class MovieDetailsPage implements OnInit {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline,
-      'heart': heart
+      'heart': heart,
+      'home-outline': homeOutline,
     });
   }
 
