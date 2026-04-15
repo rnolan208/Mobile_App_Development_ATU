@@ -39,17 +39,36 @@
 
   <!-- Movie Grid (info imported with API from TMDB) -->
   <div class="movie-grid">
-    <div class="movie-tile" *ngFor="let movie of movies" [routerLink]="['/movie', movie.id]">
+    <div class="movie-tile" *ngFor="let movie of movies">
 
-      <img [src]="movie.poster_path 
+      <div [routerLink]="['/movie', movie.id]">
+
+        <img [src]="movie.poster_path 
         ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path 
         : 'https://via.placeholder.com/150'" />
 
-      <h3>{{ movie.title }}</h3>
+        <h3>{{ movie.title }}</h3>
 
-      <p>
-        {{ movie.overview ? (movie.overview | slice:0:100) + '...' : 'No description available' }}
-      </p>
+        <p>
+          {{ movie.overview ? (movie.overview | slice:0:100) + '...' : 'No description available' }}
+        </p>
+
+      </div>
+
+      <!-- Details Button -->
+      <ion-button color="primary" expand="block" [routerLink]="['/movie', movie.id]">
+        Details
+      </ion-button>
+
+      <!-- Add / Remove To / From Favourites Button and Icon -->
+      <ion-button color="danger" expand="block" (click)="addToFavourites(movie, $event)">
+
+        <ion-icon [name]="isFavourite(movie.id) ? 'heart' : 'heart-outline'" slot="start">
+        </ion-icon>
+
+        {{ isFavourite(movie.id) ? 'Remove Favourite' : 'Add Favourite' }}
+
+      </ion-button>
 
     </div>
   </div>

@@ -45,9 +45,18 @@
 
       </div>
 
+      <!-- Details Button -->
+      <ion-button color="primary" expand="block" [routerLink]="['/movie', movie.id]">
+        Details
+      </ion-button>
+
       <!-- Remove From Favourites Button -->
       <ion-button color="danger" expand="block" (click)="removeFavourite(movie.id, $event)">
-        Remove From Favourites
+
+        <ion-icon name="heart" slot="start"></ion-icon>
+
+        Remove Favourite
+
       </ion-button>
 
     </div>

@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, searchOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, searchOutline, heart } from 'ionicons/icons';
 
 // API 
 import { ApiService } from '../services/api.service';
@@ -31,7 +31,8 @@ export class HomePage implements OnInit {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline,
-      'search-outline': searchOutline
+      'search-outline': searchOutline,
+      'heart': heart
     });
   }
 
@@ -42,6 +43,32 @@ export class HomePage implements OnInit {
     });
   }
 
+  /* Add or Remove from Favourites button */
+  addToFavourites(movie: any, event?: Event) {
+    if (event) {
+      event.stopPropagation();
+    }
+
+    let favourites = JSON.parse(localStorage.getItem('favourites') || '[]');
+
+    const index = favourites.findIndex((m: any) => m.id === movie.id);
+
+    if (index > -1) {
+      // REMOVE
+      favourites.splice(index, 1);
+    } else {
+      // ADD
+      favourites.push(movie);
+    }
+
+    localStorage.setItem('favourites', JSON.stringify(favourites));
+  }
+
+  isFavourite(movieId: number): boolean {
+    const favourites = JSON.parse(localStorage.getItem('favourites') || '[]');
+    return favourites.some((m: any) => m.id === movieId);
+  }
+
 
   /* For applying Dark Mode Toggle */
   toggleDarkMode() {
@@ -50,27 +77,27 @@ export class HomePage implements OnInit {
 
   /* For Search Function */
   onSearch() {
-  if (this.searchTerm && this.searchTerm.trim() !== '') {
+    if (this.searchTerm && this.searchTerm.trim() !== '') {
 
-    this.pageTitle = `Search Results for "${this.searchTerm}"`; // update title with whats been searched
+      this.pageTitle = `Search Results for "${this.searchTerm}"`; // update title with whats been searched
 
-    this.apiService.searchMovies(this.searchTerm).subscribe((data: any) => {
-      this.movies = data.results;
-    });
+      this.apiService.searchMovies(this.searchTerm).subscribe((data: any) => {
+        this.movies = data.results;
+      });
 
-  } else {
+    } else {
 
-    this.pageTitle = "Today's Trending Movies"; // reset title to original
+      this.pageTitle = "Today's Trending Movies"; // reset title to original
 
-    this.apiService.getTrendingMovies().subscribe((data: any) => {
-      this.movies = data.results;
-    });
+      this.apiService.getTrendingMovies().subscribe((data: any) => {
+        this.movies = data.results;
+      });
 
+    }
   }
-}
 
 }
 
 
- 
+
 
