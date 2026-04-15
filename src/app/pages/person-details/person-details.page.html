@@ -7,35 +7,58 @@
 
     <ion-title>{{ person?.name }}</ion-title>
 
+    <ion-buttons slot="end">
+      <!-- Dark Mode Toggle -->
+      <ion-button (click)="toggleDarkMode()">
+        <ion-icon name="moon-outline"></ion-icon>
+      </ion-button>
+
+      <!-- Favourites -->
+      <ion-button routerLink="/favourites">
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+
   </ion-toolbar>
 </ion-header>
 
 <ion-content class="ion-padding" *ngIf="person">
 
-  <!-- IMAGE -->
-  <div *ngIf="person.profile_path; else noImage">
-    <img [src]="'https://image.tmdb.org/t/p/w500' + person.profile_path" />
-  </div>
+  <div class="person-container">
 
-  <ng-template #noImage>
-    <p>No image</p>
-  </ng-template>
+    <!-- IMAGE -->
+    <div class="person-image" *ngIf="person.profile_path; else noImage">
+      <img [src]="'https://image.tmdb.org/t/p/w500' + person.profile_path" />
+    </div>
 
-  <!-- DETAILS -->
-  <div *ngIf="person.birthday">
-    <p><strong>DOB:</strong> {{ person.birthday }}</p>
-  </div>
+    <ng-template #noImage>
+      <div class="person-image">
+        <p>No image</p>
+      </div>
+    </ng-template>
 
-  <div *ngIf="person.deathday">
-    <p><strong>DOD:</strong> {{ person.deathday }}</p>
-  </div>
+    <!-- DETAILS -->
+    <div class="person-info">
 
-  <div *ngIf="person.also_known_as?.length">
-    <p><strong>AKA:</strong> {{ person.also_known_as.join(', ') }}</p>
-  </div>
+      <h2>{{ person?.name }}</h2>
 
-  <div *ngIf="person.biography">
-    <p>{{ person.biography }}</p>
+      <div *ngIf="person.birthday">
+        <p><strong>DOB:</strong> {{ person.birthday }}</p>
+      </div>
+
+      <div *ngIf="person.deathday">
+        <p><strong>DOD:</strong> {{ person.deathday }}</p>
+      </div>
+
+      <div *ngIf="person.also_known_as?.length">
+        <p><strong>AKA:</strong> {{ person.also_known_as.join(', ') }}</p>
+      </div>
+
+      <div *ngIf="person.biography">
+        <p>{{ person.biography }}</p>
+      </div>
+    </div>
+
   </div>
 
   <!-- MOVIES -->
@@ -43,6 +66,7 @@
 
   <div class="movie-grid">
 
+    <!-- Clickable area -->
     <div class="movie-tile" *ngFor="let movie of movies">
 
       <div [routerLink]="['/movie', movie.id]">
@@ -54,6 +78,21 @@
         <h3>{{ movie.title }}</h3>
 
       </div>
+
+      <!-- Details Button -->
+      <ion-button color="primary" expand="block" [routerLink]="['/movie', movie.id]">
+        Details
+      </ion-button>
+
+      <!-- Add / Remove To / From Favourites Button and Icon -->
+      <ion-button color="danger" expand="block" (click)="toggleFavourite(movie, $event)">
+
+        <ion-icon [name]="isFavourite(movie.id) ? 'heart' : 'heart-outline'" slot="start">
+        </ion-icon>
+
+        {{ isFavourite(movie.id) ? 'Remove Favourite' : 'Add Favourite' }}
+
+      </ion-button>
 
     </div>
 

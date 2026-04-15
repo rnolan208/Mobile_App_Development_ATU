@@ -64,7 +64,7 @@
       </ion-button>
 
       <!-- Add / Remove To / From Favourites Button and Icon -->
-      <ion-button color="danger" expand="block" (click)="addToFavourites(movie, $event)">
+      <ion-button color="danger" expand="block" (click)="toggleFavourite(movie, $event)">
 
         <ion-icon [name]="isFavourite(movie.id) ? 'heart' : 'heart-outline'" slot="start">
         </ion-icon>

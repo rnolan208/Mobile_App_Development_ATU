@@ -44,7 +44,7 @@ export class HomePage implements OnInit {
   }
 
   /* Add or Remove from Favourites button */
-  addToFavourites(movie: any, event?: Event) {
+  toggleFavourite(movie: any, event?: Event) {
     if (event) {
       event.stopPropagation();
     }

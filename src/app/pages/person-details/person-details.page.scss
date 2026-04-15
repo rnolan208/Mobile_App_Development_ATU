@@ -40,3 +40,38 @@
   text-overflow: ellipsis;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
+
+.person-container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 20px;
+}
+
+.person-image {
+  flex: 1;
+  min-width: 250px;
+  max-width: 300px;
+}
+
+.person-image img {
+  width: 100%;
+  border-radius: 10px;
+}
+
+.person-info {
+  flex: 2;
+  min-width: 250px;
+}
+
+/* Make it stack nicely on mobile */
+@media (max-width: 768px) {
+  .person-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .person-info {
+    text-align: center;
+  }
+}
