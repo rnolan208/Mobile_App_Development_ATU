@@ -17,22 +17,25 @@
     </ion-buttons>
 
   </ion-toolbar>
+
+  <ion-toolbar>
+    <!-- Search Bar -->
+    <div class="search-container">
+
+      <ion-searchbar placeholder="Search movies..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
+      </ion-searchbar>
+
+      <ion-button (click)="onSearch()" shape="round">
+        <ion-icon name="search-outline"></ion-icon>
+      </ion-button>
+
+    </div>
+
+  </ion-toolbar>
 </ion-header>
 
 
 <ion-content class="ion-padding">
-
-  <!-- Search Bar -->
-  <div class="search-container">
-
-    <ion-searchbar placeholder="Search movies..." [(ngModel)]="searchTerm" (keyup.enter)="onSearch()">
-    </ion-searchbar>
-
-    <ion-button (click)="onSearch()" shape="round">
-      <ion-icon name="search-outline"></ion-icon>
-    </ion-button>
-
-  </div>
 
   <!-- Section Title -->
   <h2>{{ pageTitle }}</h2>
