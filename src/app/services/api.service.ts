@@ -38,4 +38,17 @@ getMovieCredits(id: string) {
   );
 }
 
+// Cast and Crew Details
+getPersonDetails(id: string) {
+  return this.http.get(
+    `${this.baseUrl}/person/${id}?api_key=${this.apiKey}`
+  );
+}
+
+getPersonMovies(id: string) {
+  return this.http.get(
+    `${this.baseUrl}/person/${id}/movie_credits?api_key=${this.apiKey}`
+  );
+}
+
 }

@@ -76,9 +76,12 @@
               <ion-card-title>Cast</ion-card-title>
             </ion-card-header>
 
+            <!-- Make Person Name Clickable -->
             <ion-card-content>
-              <ion-chip *ngFor="let person of cast">
+              <ion-chip *ngFor="let person of cast" [routerLink]="['/person', person.id]">
+
                 {{ person.name }}
+
               </ion-chip>
             </ion-card-content>
           </ion-card>
@@ -89,9 +92,12 @@
               <ion-card-title>Crew</ion-card-title>
             </ion-card-header>
 
+            <!-- Make Person Name Clickable -->
             <ion-card-content>
-              <ion-chip *ngFor="let person of crew">
-                {{ person.name }} ({{ person.job }})
+              <ion-chip *ngFor="let person of crew" [routerLink]="['/person', person.id]">
+
+                {{ person.name }}
+
               </ion-chip>
             </ion-card-content>
           </ion-card>

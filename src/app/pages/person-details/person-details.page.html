@@ -1,0 +1,62 @@
+<ion-header>
+  <ion-toolbar>
+
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home"></ion-back-button>
+    </ion-buttons>
+
+    <ion-title>{{ person?.name }}</ion-title>
+
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding" *ngIf="person">
+
+  <!-- IMAGE -->
+  <div *ngIf="person.profile_path; else noImage">
+    <img [src]="'https://image.tmdb.org/t/p/w500' + person.profile_path" />
+  </div>
+
+  <ng-template #noImage>
+    <p>No image</p>
+  </ng-template>
+
+  <!-- DETAILS -->
+  <div *ngIf="person.birthday">
+    <p><strong>DOB:</strong> {{ person.birthday }}</p>
+  </div>
+
+  <div *ngIf="person.deathday">
+    <p><strong>DOD:</strong> {{ person.deathday }}</p>
+  </div>
+
+  <div *ngIf="person.also_known_as?.length">
+    <p><strong>AKA:</strong> {{ person.also_known_as.join(', ') }}</p>
+  </div>
+
+  <div *ngIf="person.biography">
+    <p>{{ person.biography }}</p>
+  </div>
+
+  <!-- MOVIES -->
+  <h2>Other Movies</h2>
+
+  <div class="movie-grid">
+
+    <div class="movie-tile" *ngFor="let movie of movies">
+
+      <div [routerLink]="['/movie', movie.id]">
+
+        <img [src]="movie.poster_path 
+          ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path 
+          : 'https://via.placeholder.com/150'" />
+
+        <h3>{{ movie.title }}</h3>
+
+      </div>
+
+    </div>
+
+  </div>
+
+</ion-content>

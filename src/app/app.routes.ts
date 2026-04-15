@@ -5,7 +5,7 @@ export const routes: Routes = [
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
   },
-  
+
   {
     path: '',
     redirectTo: 'home',
@@ -30,6 +30,16 @@ export const routes: Routes = [
   {
     path: 'favourites',
     loadComponent: () => import('./pages/favourites/favourites.page').then(m => m.FavouritesPage)
-  }
+  },
+  
+  {
+    path: 'person-details',
+    loadComponent: () => import('./pages/person-details/person-details.page').then(m => m.PersonDetailsPage)
+  },
+
+  {
+    path: 'person/:id',
+    loadComponent: () => import('./pages/person-details/person-details.page').then(m => m.PersonDetailsPage)
+  },
 
 ];
