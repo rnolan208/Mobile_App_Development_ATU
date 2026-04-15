@@ -1,8 +1,9 @@
 /* Tile Layout for Movies Grid */
 .movie-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(250px, 250px));
   gap: 15px;
+  justify-content: start;
 }
 
 .movie-tile {
@@ -38,16 +39,4 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
-}
-
-
-/* Search Bar */
-.search-container {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-ion-searchbar {
-  flex: 1;
 }
