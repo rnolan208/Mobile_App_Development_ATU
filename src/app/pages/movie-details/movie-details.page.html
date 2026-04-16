@@ -18,7 +18,8 @@
 
       <!-- Dark Mode -->
       <ion-button (click)="toggleDarkMode()">
-        <ion-icon name="moon-outline"></ion-icon>
+        <ion-icon [name]="isDarkMode() ? 'sunny-outline' : 'moon-outline'">
+        </ion-icon>
       </ion-button>
 
       <!-- Favourites -->

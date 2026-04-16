@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, searchOutline, heart, homeOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, searchOutline, heart, homeOutline, sunnyOutline } from 'ionicons/icons';
 
 // API 
 import { ApiService } from '../services/api.service';
@@ -35,6 +35,7 @@ export class HomePage implements OnInit {
       'search-outline': searchOutline,
       'heart': heart,
       'home-outline': homeOutline,
+      'sunny-outline': sunnyOutline,
     });
   }
 
@@ -44,6 +45,11 @@ export class HomePage implements OnInit {
       console.log(this.movies);
       this.sortMovies();
     });
+    const darkMode = localStorage.getItem('darkMode');
+
+    if (darkMode === 'true') {
+      document.body.classList.add('dark');
+    }
   }
 
   /* Add or Remove from Favourites button */
@@ -75,7 +81,13 @@ export class HomePage implements OnInit {
 
   /* For applying Dark Mode Toggle */
   toggleDarkMode() {
-    document.body.classList.toggle('dark');
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+  }
+
+  /* Change Icon in Dark Mode */
+  isDarkMode(): boolean {
+    return document.body.classList.contains('dark');
   }
 
   /* For Search Function */

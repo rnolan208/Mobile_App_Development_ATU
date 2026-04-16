@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart, homeOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-favourites',
@@ -26,12 +26,19 @@ export class FavouritesPage implements OnInit {
       'heart-outline': heartOutline,
       'heart': heart,
       'home-outline': homeOutline,
+      'sunny-outline': sunnyOutline,
     });
   }
 
   ngOnInit() {
     this.loadFavourites();
     this.sortMovies();
+
+    const darkMode = localStorage.getItem('darkMode');
+
+    if (darkMode === 'true') {
+      document.body.classList.add('dark');
+    }
   }
 
   ionViewWillEnter() {
@@ -52,9 +59,15 @@ export class FavouritesPage implements OnInit {
     localStorage.setItem('favourites', JSON.stringify(this.favourites));
   }
 
-  /* For applying Dark Mode Toggle */
+    /* For applying Dark Mode Toggle */
   toggleDarkMode() {
-    document.body.classList.toggle('dark');
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+  }
+
+  /* Change Icon in Dark Mode */
+  isDarkMode(): boolean {
+    return document.body.classList.contains('dark');
   }
 
   /* For Sorting Option */

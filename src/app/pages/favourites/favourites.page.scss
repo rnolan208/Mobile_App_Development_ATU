@@ -7,7 +7,8 @@
 }
 
 .movie-tile {
-  background: var(--ion-color-light);
+  background: var(--ion-item-background);;
+  color: var(--ion-text-color);
   padding: 10px;
   border-radius: 10px;
   text-align: center;
@@ -32,6 +33,7 @@
   line-height: 1.2em;
   height: 2.4em; /* ~2 lines to always have description (p) start at same level in card tile */
   overflow: hidden;
+  color: var(--ion-text-color);
 }
 
 .movie-tile p {
@@ -39,6 +41,7 @@
   overflow: hidden;
   text-overflow: ellipsis;
   font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+  color: var(--ion-text-color);
 }
 
 

@@ -14,7 +14,8 @@
     <ion-buttons slot="end">
       <!-- Dark Mode Toggle -->
       <ion-button (click)="toggleDarkMode()">
-        <ion-icon name="moon-outline"></ion-icon>
+        <ion-icon [name]="isDarkMode() ? 'sunny-outline' : 'moon-outline'">
+        </ion-icon>
       </ion-button>
 
       <!-- Favourites -->
@@ -23,9 +24,9 @@
       </ion-button>
     </ion-buttons>
 
-    </ion-toolbar>
-    
-    <ion-toolbar>
+  </ion-toolbar>
+
+  <ion-toolbar>
 
     <!-- Sort Options -->
     <div class="sort-container">

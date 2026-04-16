@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart, homeOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline } from 'ionicons/icons';
 
 // API
 import { ApiService } from '../../services/api.service';
@@ -33,6 +33,7 @@ export class PersonDetailsPage implements OnInit {
       'heart-outline': heartOutline,
       'heart': heart,
       'home-outline': homeOutline,
+      'sunny-outline': sunnyOutline,
     });
   }
 
@@ -47,6 +48,12 @@ export class PersonDetailsPage implements OnInit {
       this.apiService.getPersonMovies(id).subscribe((data: any) => {
         this.movies = data.cast;
       });
+    }
+
+    const darkMode = localStorage.getItem('darkMode');
+
+    if (darkMode === 'true') {
+      document.body.classList.add('dark');
     }
   }
 
@@ -77,9 +84,15 @@ export class PersonDetailsPage implements OnInit {
   }
 
 
-  /* For applying Dark Mode Toggle */
+    /* For applying Dark Mode Toggle */
   toggleDarkMode() {
-    document.body.classList.toggle('dark');
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+  }
+
+  /* Change Icon in Dark Mode */
+  isDarkMode(): boolean {
+    return document.body.classList.contains('dark');
   }
 
 }

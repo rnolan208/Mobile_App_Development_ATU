@@ -9,7 +9,7 @@ import { ApiService } from '../../services/api.service';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart, homeOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-movie-details',
@@ -33,6 +33,7 @@ export class MovieDetailsPage implements OnInit {
       'heart-outline': heartOutline,
       'heart': heart,
       'home-outline': homeOutline,
+      'sunny-outline': sunnyOutline,
     });
   }
 
@@ -52,10 +53,23 @@ export class MovieDetailsPage implements OnInit {
         this.crew = data.crew.slice(0, 10); // top 10 crew
       });
     }
+
+    const darkMode = localStorage.getItem('darkMode');
+
+    if (darkMode === 'true') {
+      document.body.classList.add('dark');
+    }
   }
 
+    /* For applying Dark Mode Toggle */
   toggleDarkMode() {
-    document.body.classList.toggle('dark');
+    const isDark = document.body.classList.toggle('dark');
+    localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+  }
+
+  /* Change Icon in Dark Mode */
+  isDarkMode(): boolean {
+    return document.body.classList.contains('dark');
   }
 
   isFavourite: boolean = false;
