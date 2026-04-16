@@ -9,7 +9,7 @@ import { ApiService } from '../../services/api.service';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline} from 'ionicons/icons';
 
 @Component({
   selector: 'app-movie-details',
@@ -34,6 +34,7 @@ export class MovieDetailsPage implements OnInit {
       'heart': heart,
       'home-outline': homeOutline,
       'sunny-outline': sunnyOutline,
+      'time-outline': timeOutline,
     });
   }
 
@@ -43,6 +44,7 @@ export class MovieDetailsPage implements OnInit {
     if (id) {
       this.apiService.getMovieDetails(id).subscribe((data: any) => {
         this.movie = data;
+        this.addToRecentlyViewed(this.movie);
 
         const favourites = JSON.parse(localStorage.getItem('favourites') || '[]');
         this.isFavourite = favourites.some((m: any) => m.id === this.movie.id);
@@ -61,7 +63,23 @@ export class MovieDetailsPage implements OnInit {
     }
   }
 
-    /* For applying Dark Mode Toggle */
+  // For the recently viewed page
+    addToRecentlyViewed(movie: any) {
+      let recent = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
+
+      // Remove movie if it already exists
+      recent = recent.filter((m: any) => m.id !== movie.id);
+
+      // Add to front of the list
+      recent.unshift(movie);
+
+      // Limit to maximum of 14 (for page layout)
+      recent = recent.slice(0, 14);
+
+      localStorage.setItem('recentlyViewed', JSON.stringify(recent));
+    }
+
+  /* For applying Dark Mode Toggle */
   toggleDarkMode() {
     const isDark = document.body.classList.toggle('dark');
     localStorage.setItem('darkMode', isDark ? 'true' : 'false');

@@ -1,33 +1,36 @@
 import { Component, OnInit } from '@angular/core';
-import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { IonicModule } from '@ionic/angular';
 import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
 import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline } from 'ionicons/icons';
 
-// API
-import { ApiService } from '../../services/api.service';
 
 @Component({
-  selector: 'app-person-details',
-  templateUrl: './person-details.page.html',
-  styleUrls: ['./person-details.page.scss'],
+  selector: 'app-recently-viewed',
+  templateUrl: './recently-viewed.page.html',
+  styleUrls: ['./recently-viewed.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, RouterModule]
 })
-export class PersonDetailsPage implements OnInit {
+export class RecentlyViewedPage implements OnInit {
 
-  person: any;
-   movies: any[] = [];
+  recent: any[] = [];
+  movies: any[] = [];
+  sortOption: string = 'default';
 
-  constructor(
-    private route: ActivatedRoute,
-    private apiService: ApiService
-  ) { 
+  ionViewWillEnter() {
+    this.loadRecent();
+  }
+
+  loadRecent() {
+    this.recent = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
+  }
+
+  constructor() {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline,
@@ -39,24 +42,14 @@ export class PersonDetailsPage implements OnInit {
   }
 
   ngOnInit() {
-    const id = this.route.snapshot.paramMap.get('id');
-
-    if (id) {
-      this.apiService.getPersonDetails(id).subscribe((data: any) => {
-        this.person = data;
-      });
-
-      this.apiService.getPersonMovies(id).subscribe((data: any) => {
-        this.movies = data.cast;
-      });
-    }
-
+    
     const darkMode = localStorage.getItem('darkMode');
 
     if (darkMode === 'true') {
       document.body.classList.add('dark');
     }
   }
+
 
   /* Add or Remove from Favourites button */
   toggleFavourite(movie: any, event?: Event) {
@@ -85,7 +78,8 @@ export class PersonDetailsPage implements OnInit {
   }
 
 
-    /* For applying Dark Mode Toggle */
+
+  /* For applying Dark Mode Toggle */
   toggleDarkMode() {
     const isDark = document.body.classList.toggle('dark');
     localStorage.setItem('darkMode', isDark ? 'true' : 'false');
@@ -94,6 +88,26 @@ export class PersonDetailsPage implements OnInit {
   /* Change Icon in Dark Mode */
   isDarkMode(): boolean {
     return document.body.classList.contains('dark');
+  }
+
+  /* For Sorting Search Option */
+  sortMovies() {
+
+    if (this.sortOption === 'az') {
+      this.movies.sort((a, b) => a.title.localeCompare(b.title));
+    }
+
+    if (this.sortOption === 'za') {
+      this.movies.sort((a, b) => b.title.localeCompare(a.title));
+    }
+
+    if (this.sortOption === 'dateAsc') {
+      this.movies.sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime());
+    }
+
+    if (this.sortOption === 'dateDesc') {
+      this.movies.sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
+    }
   }
 
 }

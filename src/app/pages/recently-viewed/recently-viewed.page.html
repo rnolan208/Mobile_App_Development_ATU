@@ -9,7 +9,9 @@
     </ion-buttons>
 
     <!-- Title -->
-    <ion-title>{{ person?.name }}</ion-title>
+    <ion-title class="ion-text-center">
+      <h2>Recently Viewed</h2>
+    </ion-title>
 
     <!-- Right Side Buttons -->
     <ion-buttons slot="end">
@@ -34,52 +36,15 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-padding" *ngIf="person">
 
-  <div class="person-container">
+<ion-content class="ion-padding">
 
-    <!-- IMAGE -->
-    <div class="person-image" *ngIf="person.profile_path; else noImage">
-      <img [src]="'https://image.tmdb.org/t/p/w500' + person.profile_path" />
-    </div>
+  <!-- Section Title -->
+  <h2>Recently Viewed</h2>
 
-    <ng-template #noImage>
-      <div class="person-image">
-        <p>No image</p>
-      </div>
-    </ng-template>
-
-    <!-- DETAILS -->
-    <div class="person-info">
-
-      <h2>{{ person?.name }}</h2>
-
-      <div *ngIf="person.birthday">
-        <p><strong>DOB:</strong> {{ person.birthday }}</p>
-      </div>
-
-      <div *ngIf="person.deathday">
-        <p><strong>DOD:</strong> {{ person.deathday }}</p>
-      </div>
-
-      <div *ngIf="person.also_known_as?.length">
-        <p><strong>AKA:</strong> {{ person.also_known_as.join(', ') }}</p>
-      </div>
-
-      <div *ngIf="person.biography">
-        <p>{{ person.biography }}</p>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- MOVIES -->
-  <h2>Other Movies</h2>
-
+  <!-- Movie Grid -->
   <div class="movie-grid">
-
-    <!-- Clickable area -->
-    <div class="movie-tile" *ngFor="let movie of movies">
+    <div class="movie-tile" *ngFor="let movie of recent">
 
       <div [routerLink]="['/movie', movie.id]">
 
@@ -89,6 +54,12 @@
 
         <h3>{{ movie.title }}</h3>
 
+        <p>
+          {{ movie.overview 
+            ? (movie.overview | slice:0:100) + '...' 
+            : 'No description available' }}
+        </p>
+
       </div>
 
       <!-- Details Button -->
@@ -96,18 +67,20 @@
         Details
       </ion-button>
 
-      <!-- Add / Remove To / From Favourites Button and Icon -->
+      <!-- Optional Favourite Button (if you want consistency) -->
       <ion-button color="danger" expand="block" (click)="toggleFavourite(movie, $event)">
 
-        <ion-icon [name]="isFavourite(movie.id) ? 'heart' : 'heart-outline'" slot="start">
-        </ion-icon>
+        <ion-icon [name]="isFavourite(movie.id) ? 'heart' : 'heart-outline'" slot="start"></ion-icon>
 
         {{ isFavourite(movie.id) ? 'Remove Favourite' : 'Add Favourite' }}
-
       </ion-button>
 
     </div>
+  </div>
 
+  <!-- Empty state -->
+  <div *ngIf="recent.length === 0" class="empty">
+    <p>No recently viewed movies.</p>
   </div>
 
 </ion-content>

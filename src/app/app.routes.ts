@@ -40,6 +40,10 @@ export const routes: Routes = [
   {
     path: 'person/:id',
     loadComponent: () => import('./pages/person-details/person-details.page').then(m => m.PersonDetailsPage)
+  },  {
+    path: 'recently-viewed',
+    loadComponent: () => import('./pages/recently-viewed/recently-viewed.page').then( m => m.RecentlyViewedPage)
   },
+
 
 ];

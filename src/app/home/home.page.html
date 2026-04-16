@@ -13,18 +13,25 @@
       G00474404
     </ion-title>
 
+    <!-- Right Side Buttons -->
     <ion-buttons slot="end">
-      <!-- Dark Mode Toggle -->
-      <ion-button (click)="toggleDarkMode()">
-        <ion-icon [name]="isDarkMode() ? 'sunny-outline' : 'moon-outline'">
-        </ion-icon>
+
+      <ion-button routerLink="/recently-viewed">
+        <ion-icon name="time-outline"></ion-icon>
       </ion-button>
 
-      <!-- Favourites -->
-      <ion-button routerLink="/favourites">
-        <ion-icon name="heart-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
+        <!-- Dark Mode Toggle -->
+        <ion-button (click)="toggleDarkMode()">
+          <ion-icon [name]="isDarkMode() ? 'sunny-outline' : 'moon-outline'">
+          </ion-icon>
+        </ion-button>
+
+        <!-- Favourites -->
+        <ion-button routerLink="/favourites">
+          <ion-icon name="heart-outline"></ion-icon>
+        </ion-button>
+
+      </ion-buttons>
 
   </ion-toolbar>
 

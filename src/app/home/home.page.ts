@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, searchOutline, heart, homeOutline, sunnyOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, searchOutline, heart, homeOutline, sunnyOutline, timeOutline } from 'ionicons/icons';
 
 // API 
 import { ApiService } from '../services/api.service';
@@ -36,6 +36,7 @@ export class HomePage implements OnInit {
       'heart': heart,
       'home-outline': homeOutline,
       'sunny-outline': sunnyOutline,
+      'time-outline': timeOutline,
     });
   }
 
@@ -45,6 +46,7 @@ export class HomePage implements OnInit {
       console.log(this.movies);
       this.sortMovies();
     });
+    
     const darkMode = localStorage.getItem('darkMode');
 
     if (darkMode === 'true') {
