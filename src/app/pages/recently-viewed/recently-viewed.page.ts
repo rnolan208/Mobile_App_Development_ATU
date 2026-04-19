@@ -45,6 +45,9 @@ export class RecentlyViewedPage implements OnInit {
   }
 
   ngOnInit() {
+
+    const saved = localStorage.getItem('viewMode');
+      if (saved) this.viewMode = saved as 'grid' | 'list';
     
     const darkMode = localStorage.getItem('darkMode');
 
@@ -93,24 +96,10 @@ export class RecentlyViewedPage implements OnInit {
     return document.body.classList.contains('dark');
   }
 
-  /* For Sorting Search Option */
-  sortMovies() {
-
-    if (this.sortOption === 'az') {
-      this.movies.sort((a, b) => a.title.localeCompare(b.title));
-    }
-
-    if (this.sortOption === 'za') {
-      this.movies.sort((a, b) => b.title.localeCompare(a.title));
-    }
-
-    if (this.sortOption === 'dateAsc') {
-      this.movies.sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime());
-    }
-
-    if (this.sortOption === 'dateDesc') {
-      this.movies.sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
-    }
-  }
+  /* Set Movie View - Tile or List */
+  setView(mode: 'grid' | 'list') {
+  this.viewMode = mode;
+  localStorage.setItem('viewMode', mode);
+}
 
 }

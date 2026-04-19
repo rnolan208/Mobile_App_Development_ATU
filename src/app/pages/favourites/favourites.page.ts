@@ -20,6 +20,7 @@ export class FavouritesPage implements OnInit {
   favourites: any[] = [];
   sortOption: string = 'default';
   viewMode: 'grid' | 'list' = 'grid';
+  movies: any[] = [];
 
   constructor() {
     addIcons({
@@ -37,6 +38,9 @@ export class FavouritesPage implements OnInit {
   ngOnInit() {
     this.loadFavourites();
     this.sortMovies();
+
+    const saved = localStorage.getItem('viewMode');
+      if (saved) this.viewMode = saved as 'grid' | 'list';
 
     const darkMode = localStorage.getItem('darkMode');
 
@@ -93,5 +97,11 @@ export class FavouritesPage implements OnInit {
       this.favourites.sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
     }
   }
+
+  /* Set Movie View - Tile or List */
+  setView(mode: 'grid' | 'list') {
+  this.viewMode = mode;
+  localStorage.setItem('viewMode', mode);
+}
 
 }

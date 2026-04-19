@@ -59,20 +59,25 @@
   </ion-toolbar>
 </ion-header>
 
+
 <ion-content class="ion-padding">
 
+  <!-- Section Title -->
   <h2>My Favourite Movies</h2>
 
-  <div class="movie-grid">
-
+  <!-- MOVIE GRID VERSION (info imported from Favourites (Local Storage)) -->
+  <div *ngIf="viewMode === 'grid'" class="movie-grid">
     <div class="movie-tile" *ngFor="let movie of favourites">
 
-      <!-- Clickable area -->
-      <div [routerLink]="['/movie', movie.id]">
+      <!-- IMAGE ONLY CLICKABLE -->
+      <div class="clickable" [routerLink]="['/movie', movie.id]">
 
         <img [src]="movie.poster_path 
-          ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path 
-          : 'https://via.placeholder.com/150'" />
+        ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path 
+        : 'https://via.placeholder.com/150'" />
+      </div>
+
+      <div class="movie-info">
 
         <h3>{{ movie.title }}</h3>
 
@@ -83,11 +88,12 @@
       </div>
 
       <!-- Details Button -->
-      <ion-button color="primary" expand="block" [routerLink]="['/movie', movie.id]">
-        Details
-      </ion-button>
+      <div class="movie-actions">
+        <ion-button color="primary" expand="block" [routerLink]="['/movie', movie.id]">
+          Details
+        </ion-button>
 
-      <!-- Remove From Favourites Button -->
+        <!-- Remove From Favourites Button -->
       <ion-button color="danger" expand="block" (click)="removeFavourite(movie.id, $event)">
 
         <ion-icon name="heart" slot="start"></ion-icon>
@@ -95,9 +101,48 @@
         Remove Favourite
 
       </ion-button>
-
+      </div>
     </div>
+  </div>
 
+  <!-- MOVIE LIST VERSION (info imported from Favourites (Local Storage)) -->
+  <div *ngIf="viewMode === 'list'" class="movie-list">
+    <div class="movie-list-item" *ngFor="let movie of favourites">
+
+      <!-- IMAGE ONLY CLICKABLE -->
+      <div class="clickable" [routerLink]="['/movie', movie.id]">
+
+        <img [src]="movie.poster_path 
+        ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path 
+        : 'https://via.placeholder.com/150'" />
+      </div>
+
+        <div class="movie-info">
+
+          <h3>{{ movie.title }}</h3>
+
+          <p>
+            {{ movie.overview ? movie.overview : 'No description available' }}
+          </p>
+
+        </div>
+
+        <!-- Details Button -->
+        <div class="movie-actions">
+          <ion-button color="primary" expand="block" [routerLink]="['/movie', movie.id]">
+            Details
+          </ion-button>
+
+          <!-- Remove From Favourites Button -->
+      <ion-button color="danger" expand="block" (click)="removeFavourite(movie.id, $event)">
+
+        <ion-icon name="heart" slot="start"></ion-icon>
+
+        Remove Favourite
+
+      </ion-button>
+        </div>
+    </div>
   </div>
 
   <!-- Empty State -->
@@ -105,4 +150,4 @@
     <p>No favourites added yet.</p>
   </div>
 
-</ion-content>
+  </ion-content>
