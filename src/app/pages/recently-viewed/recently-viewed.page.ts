@@ -6,7 +6,10 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline, arrowBack } from 'ionicons/icons';
+
+// Go Back Button via Navcontroller
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -31,7 +34,7 @@ export class RecentlyViewedPage implements OnInit {
     this.recent = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
   }
 
-  constructor() {
+  constructor(private navCtrl: NavController,) {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline,
@@ -41,14 +44,15 @@ export class RecentlyViewedPage implements OnInit {
       'time-outline': timeOutline,
       'list-outline': listOutline,
       'grid-outline': gridOutline,
+      'arrow-back-outline': arrowBack,
     });
   }
 
   ngOnInit() {
 
     const saved = localStorage.getItem('viewMode');
-      if (saved) this.viewMode = saved as 'grid' | 'list';
-    
+    if (saved) this.viewMode = saved as 'grid' | 'list';
+
     const darkMode = localStorage.getItem('darkMode');
 
     if (darkMode === 'true') {
@@ -98,8 +102,14 @@ export class RecentlyViewedPage implements OnInit {
 
   /* Set Movie View - Tile or List */
   setView(mode: 'grid' | 'list') {
-  this.viewMode = mode;
-  localStorage.setItem('viewMode', mode);
-}
+    this.viewMode = mode;
+    localStorage.setItem('viewMode', mode);
+  }
+
+  /* Go Back Button */
+  goBack() {
+    this.navCtrl.back();
+  }
+
 
 }

@@ -7,10 +7,13 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline, arrowBack } from 'ionicons/icons';
 
 // API
 import { ApiService } from '../../services/api.service';
+
+// Go Back Button via Navcontroller
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-person-details',
@@ -22,13 +25,14 @@ import { ApiService } from '../../services/api.service';
 export class PersonDetailsPage implements OnInit {
 
   person: any;
-   movies: any[] = [];
-   viewMode: 'grid' | 'list' = 'grid';
+  movies: any[] = [];
+  viewMode: 'grid' | 'list' = 'grid';
 
   constructor(
     private route: ActivatedRoute,
-    private apiService: ApiService
-  ) { 
+    private apiService: ApiService,
+    private navCtrl: NavController,
+  ) {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline,
@@ -38,6 +42,7 @@ export class PersonDetailsPage implements OnInit {
       'time-outline': timeOutline,
       'list-outline': listOutline,
       'grid-outline': gridOutline,
+      'arrow-back-outline': arrowBack,
     });
   }
 
@@ -88,7 +93,7 @@ export class PersonDetailsPage implements OnInit {
   }
 
 
-    /* For applying Dark Mode Toggle */
+  /* For applying Dark Mode Toggle */
   toggleDarkMode() {
     const isDark = document.body.classList.toggle('dark');
     localStorage.setItem('darkMode', isDark ? 'true' : 'false');
@@ -98,5 +103,11 @@ export class PersonDetailsPage implements OnInit {
   isDarkMode(): boolean {
     return document.body.classList.contains('dark');
   }
+
+  /* Go Back Button */
+  goBack() {
+    this.navCtrl.back();
+  }
+
 
 }

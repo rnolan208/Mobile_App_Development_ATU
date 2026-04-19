@@ -6,10 +6,13 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, searchOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, searchOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline, arrowBack } from 'ionicons/icons';
 
 // API 
 import { ApiService } from '../services/api.service';
+
+// Go Back Button via Navcontroller
+import { NavController } from '@ionic/angular';
 
 
 @Component({
@@ -31,7 +34,7 @@ export class HomePage implements OnInit {
   sortOption: string = 'default';
   viewMode: 'grid' | 'list' = 'grid';
 
-  constructor(private apiService: ApiService) {
+  constructor(private apiService: ApiService, private navCtrl: NavController) {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline,
@@ -42,6 +45,7 @@ export class HomePage implements OnInit {
       'time-outline': timeOutline,
       'list-outline': listOutline,
       'grid-outline': gridOutline,
+      'arrow-back-outline': arrowBack,
     });
   }
 
@@ -145,9 +149,14 @@ export class HomePage implements OnInit {
 
   /* Set Movie View - Tile or List */
   setView(mode: 'grid' | 'list') {
-  this.viewMode = mode;
-  localStorage.setItem('viewMode', mode);
-}
+    this.viewMode = mode;
+    localStorage.setItem('viewMode', mode);
+  }
+
+  /* Go Back Button */
+  goBack() {
+    this.navCtrl.back();
+  }
 
 }
 

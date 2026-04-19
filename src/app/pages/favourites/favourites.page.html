@@ -1,8 +1,14 @@
 <ion-header>
   <ion-toolbar>
 
-    <!-- Home Button -->
     <ion-buttons slot="start">
+
+      <!-- Go Back Button -->
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+
+      <!-- Home Page Button -->
       <ion-button routerLink="/home">
         <ion-icon name="home-outline"></ion-icon>
       </ion-button>
@@ -11,7 +17,7 @@
       <ion-button (click)="viewMode = viewMode === 'grid' ? 'list' : 'grid'">
         <ion-icon [name]="viewMode === 'grid' ? 'list-outline' : 'grid-outline'"></ion-icon>
       </ion-button>
-      
+
     </ion-buttons>
 
     <!-- Title -->
@@ -24,18 +30,18 @@
         <ion-icon name="time-outline"></ion-icon>
       </ion-button>
 
-        <!-- Dark Mode Toggle -->
-        <ion-button (click)="toggleDarkMode()">
-          <ion-icon [name]="isDarkMode() ? 'sunny-outline' : 'moon-outline'">
-          </ion-icon>
-        </ion-button>
+      <!-- Dark Mode Toggle -->
+      <ion-button (click)="toggleDarkMode()">
+        <ion-icon [name]="isDarkMode() ? 'sunny-outline' : 'moon-outline'">
+        </ion-icon>
+      </ion-button>
 
-        <!-- Favourites -->
-        <ion-button routerLink="/favourites">
-          <ion-icon name="heart-outline"></ion-icon>
-        </ion-button>
+      <!-- Favourites -->
+      <ion-button routerLink="/favourites">
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-button>
 
-      </ion-buttons>
+    </ion-buttons>
 
   </ion-toolbar>
 
@@ -94,13 +100,13 @@
         </ion-button>
 
         <!-- Remove From Favourites Button -->
-      <ion-button color="danger" expand="block" (click)="removeFavourite(movie.id, $event)">
+        <ion-button color="danger" expand="block" (click)="removeFavourite(movie.id, $event)">
 
-        <ion-icon name="heart" slot="start"></ion-icon>
+          <ion-icon name="heart" slot="start"></ion-icon>
 
-        Remove Favourite
+          Remove Favourite
 
-      </ion-button>
+        </ion-button>
       </div>
     </div>
   </div>
@@ -117,31 +123,31 @@
         : 'https://via.placeholder.com/150'" />
       </div>
 
-        <div class="movie-info">
+      <div class="movie-info">
 
-          <h3>{{ movie.title }}</h3>
+        <h3>{{ movie.title }}</h3>
 
-          <p>
-            {{ movie.overview ? movie.overview : 'No description available' }}
-          </p>
+        <p>
+          {{ movie.overview ? movie.overview : 'No description available' }}
+        </p>
 
-        </div>
+      </div>
 
-        <!-- Details Button -->
-        <div class="movie-actions">
-          <ion-button color="primary" expand="block" [routerLink]="['/movie', movie.id]">
-            Details
-          </ion-button>
+      <!-- Details Button -->
+      <div class="movie-actions">
+        <ion-button color="primary" expand="block" [routerLink]="['/movie', movie.id]">
+          Details
+        </ion-button>
 
-          <!-- Remove From Favourites Button -->
-      <ion-button color="danger" expand="block" (click)="removeFavourite(movie.id, $event)">
+        <!-- Remove From Favourites Button -->
+        <ion-button color="danger" expand="block" (click)="removeFavourite(movie.id, $event)">
 
-        <ion-icon name="heart" slot="start"></ion-icon>
+          <ion-icon name="heart" slot="start"></ion-icon>
 
-        Remove Favourite
+          Remove Favourite
 
-      </ion-button>
-        </div>
+        </ion-button>
+      </div>
     </div>
   </div>
 
@@ -150,4 +156,4 @@
     <p>No favourites added yet.</p>
   </div>
 
-  </ion-content>
+</ion-content>

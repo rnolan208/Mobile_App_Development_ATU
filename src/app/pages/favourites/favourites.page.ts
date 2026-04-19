@@ -6,7 +6,10 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline, arrowBack } from 'ionicons/icons';
+
+// Go Back Button via Navcontroller
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-favourites',
@@ -22,7 +25,7 @@ export class FavouritesPage implements OnInit {
   viewMode: 'grid' | 'list' = 'grid';
   movies: any[] = [];
 
-  constructor() {
+  constructor(private navCtrl: NavController) {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline,
@@ -32,6 +35,7 @@ export class FavouritesPage implements OnInit {
       'time-outline': timeOutline,
       'list-outline': listOutline,
       'grid-outline': gridOutline,
+      'arrow-back-outline': arrowBack,
     });
   }
 
@@ -103,5 +107,10 @@ export class FavouritesPage implements OnInit {
   this.viewMode = mode;
   localStorage.setItem('viewMode', mode);
 }
+
+/* Go Back Button */
+  goBack() {
+    this.navCtrl.back();
+  }
 
 }

@@ -9,7 +9,11 @@ import { ApiService } from '../../services/api.service';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline} from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline, arrowBack } from 'ionicons/icons';
+
+// Go Back Button via Navcontroller
+import { NavController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-movie-details',
@@ -26,7 +30,8 @@ export class MovieDetailsPage implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private apiService: ApiService
+    private apiService: ApiService,
+    private navCtrl: NavController,
   ) {
     addIcons({
       'moon-outline': moonOutline,
@@ -35,6 +40,7 @@ export class MovieDetailsPage implements OnInit {
       'home-outline': homeOutline,
       'sunny-outline': sunnyOutline,
       'time-outline': timeOutline,
+      'arrow-back-outline': arrowBack,
     });
   }
 
@@ -64,20 +70,20 @@ export class MovieDetailsPage implements OnInit {
   }
 
   // For the recently viewed page
-    addToRecentlyViewed(movie: any) {
-      let recent = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
+  addToRecentlyViewed(movie: any) {
+    let recent = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
 
-      // Remove movie if it already exists
-      recent = recent.filter((m: any) => m.id !== movie.id);
+    // Remove movie if it already exists
+    recent = recent.filter((m: any) => m.id !== movie.id);
 
-      // Add to front of the list
-      recent.unshift(movie);
+    // Add to front of the list
+    recent.unshift(movie);
 
-      // Limit to maximum of 14 (for page layout)
-      recent = recent.slice(0, 14);
+    // Limit to maximum of 14 (for page layout)
+    recent = recent.slice(0, 14);
 
-      localStorage.setItem('recentlyViewed', JSON.stringify(recent));
-    }
+    localStorage.setItem('recentlyViewed', JSON.stringify(recent));
+  }
 
   /* For applying Dark Mode Toggle */
   toggleDarkMode() {
@@ -106,6 +112,11 @@ export class MovieDetailsPage implements OnInit {
     }
 
     localStorage.setItem('favourites', JSON.stringify(favourites));
+  }
+
+  /* Go Back Button */
+  goBack() {
+    this.navCtrl.back();
   }
 
 

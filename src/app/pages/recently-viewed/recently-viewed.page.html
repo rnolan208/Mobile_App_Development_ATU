@@ -1,8 +1,14 @@
 <ion-header>
   <ion-toolbar>
 
-    <!-- Home Button -->
     <ion-buttons slot="start">
+
+      <!-- Go Back Button -->
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+
+      <!-- Home Page Button -->
       <ion-button routerLink="/home">
         <ion-icon name="home-outline"></ion-icon>
       </ion-button>
@@ -102,38 +108,38 @@
         : 'https://via.placeholder.com/150'" />
       </div>
 
-        <div class="movie-info">
+      <div class="movie-info">
 
-          <h3>{{ movie.title }}</h3>
+        <h3>{{ movie.title }}</h3>
 
-          <p>
-            {{ movie.overview ? movie.overview : 'No description available' }}
-          </p>
+        <p>
+          {{ movie.overview ? movie.overview : 'No description available' }}
+        </p>
 
-        </div>
+      </div>
 
-        <!-- Details Button -->
-        <div class="movie-actions">
-          <ion-button color="primary" expand="block" [routerLink]="['/movie', movie.id]">
-            Details
-          </ion-button>
+      <!-- Details Button -->
+      <div class="movie-actions">
+        <ion-button color="primary" expand="block" [routerLink]="['/movie', movie.id]">
+          Details
+        </ion-button>
 
-          <!-- Add / Remove To / From Favourites Button and Icon -->
-          <ion-button color="danger" expand="block" (click)="toggleFavourite(movie, $event)">
+        <!-- Add / Remove To / From Favourites Button and Icon -->
+        <ion-button color="danger" expand="block" (click)="toggleFavourite(movie, $event)">
 
-            <ion-icon [name]="isFavourite(movie.id) ? 'heart' : 'heart-outline'" slot="start">
-            </ion-icon>
+          <ion-icon [name]="isFavourite(movie.id) ? 'heart' : 'heart-outline'" slot="start">
+          </ion-icon>
 
-            {{ isFavourite(movie.id) ? 'Remove Favourite' : 'Add Favourite' }}
+          {{ isFavourite(movie.id) ? 'Remove Favourite' : 'Add Favourite' }}
 
-          </ion-button>
-        </div>
+        </ion-button>
+      </div>
     </div>
   </div>
 
-    <!-- Empty state -->
+  <!-- Empty state -->
   <div *ngIf="recent.length === 0" class="empty">
     <p>No recently viewed movies.</p>
   </div>
 
-  </ion-content>
+</ion-content>

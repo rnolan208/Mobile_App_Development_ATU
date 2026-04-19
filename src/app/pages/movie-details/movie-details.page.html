@@ -1,8 +1,14 @@
 <ion-header>
   <ion-toolbar>
 
-    <!-- Home Button -->
     <ion-buttons slot="start">
+
+      <!-- Go Back Button -->
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back-outline"></ion-icon>
+      </ion-button>
+
+      <!-- Home Page Button -->
       <ion-button routerLink="/home">
         <ion-icon name="home-outline"></ion-icon>
       </ion-button>
@@ -20,18 +26,18 @@
         <ion-icon name="time-outline"></ion-icon>
       </ion-button>
 
-        <!-- Dark Mode Toggle -->
-        <ion-button (click)="toggleDarkMode()">
-          <ion-icon [name]="isDarkMode() ? 'sunny-outline' : 'moon-outline'">
-          </ion-icon>
-        </ion-button>
+      <!-- Dark Mode Toggle -->
+      <ion-button (click)="toggleDarkMode()">
+        <ion-icon [name]="isDarkMode() ? 'sunny-outline' : 'moon-outline'">
+        </ion-icon>
+      </ion-button>
 
-        <!-- Favourites -->
-        <ion-button routerLink="/favourites">
-          <ion-icon name="heart-outline"></ion-icon>
-        </ion-button>
+      <!-- Favourites -->
+      <ion-button routerLink="/favourites">
+        <ion-icon name="heart-outline"></ion-icon>
+      </ion-button>
 
-      </ion-buttons>
+    </ion-buttons>
 
   </ion-toolbar>
 </ion-header>
