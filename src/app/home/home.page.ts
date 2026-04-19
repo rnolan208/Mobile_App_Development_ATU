@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, searchOutline, heart, homeOutline, sunnyOutline, timeOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, searchOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline } from 'ionicons/icons';
 
 // API 
 import { ApiService } from '../services/api.service';
@@ -18,6 +18,8 @@ import { ApiService } from '../services/api.service';
   styleUrls: ['home.page.scss'],
   standalone: true,
   imports: [IonicModule, CommonModule, FormsModule, RouterModule],
+
+
 })
 
 // Home Page Layout
@@ -27,6 +29,7 @@ export class HomePage implements OnInit {
   movies: any[] = [];
   pageTitle: string = "Today's Trending Movies";
   sortOption: string = 'default';
+  viewMode: 'grid' | 'list' = 'grid';
 
   constructor(private apiService: ApiService) {
     addIcons({
@@ -37,6 +40,8 @@ export class HomePage implements OnInit {
       'home-outline': homeOutline,
       'sunny-outline': sunnyOutline,
       'time-outline': timeOutline,
+      'list-outline': listOutline,
+      'grid-outline': gridOutline,
     });
   }
 
@@ -45,8 +50,11 @@ export class HomePage implements OnInit {
       this.movies = data.results;
       console.log(this.movies);
       this.sortMovies();
+
+      const saved = localStorage.getItem('viewMode');
+      if (saved) this.viewMode = saved as 'grid' | 'list';
     });
-    
+
     const darkMode = localStorage.getItem('darkMode');
 
     if (darkMode === 'true') {
@@ -134,6 +142,12 @@ export class HomePage implements OnInit {
       this.movies.sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
     }
   }
+
+  /* Set Movie View - Tile or List */
+  setView(mode: 'grid' | 'list') {
+  this.viewMode = mode;
+  localStorage.setItem('viewMode', mode);
+}
 
 }
 

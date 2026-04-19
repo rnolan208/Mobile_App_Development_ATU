@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline } from 'ionicons/icons';
 
 
 @Component({
@@ -21,6 +21,7 @@ export class RecentlyViewedPage implements OnInit {
   recent: any[] = [];
   movies: any[] = [];
   sortOption: string = 'default';
+  viewMode: 'grid' | 'list' = 'grid';
 
   ionViewWillEnter() {
     this.loadRecent();
@@ -38,6 +39,8 @@ export class RecentlyViewedPage implements OnInit {
       'home-outline': homeOutline,
       'sunny-outline': sunnyOutline,
       'time-outline': timeOutline,
+      'list-outline': listOutline,
+      'grid-outline': gridOutline,
     });
   }
 

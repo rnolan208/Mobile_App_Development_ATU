@@ -7,7 +7,7 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline } from 'ionicons/icons';
 
 // API
 import { ApiService } from '../../services/api.service';
@@ -23,6 +23,7 @@ export class PersonDetailsPage implements OnInit {
 
   person: any;
    movies: any[] = [];
+   viewMode: 'grid' | 'list' = 'grid';
 
   constructor(
     private route: ActivatedRoute,
@@ -35,6 +36,8 @@ export class PersonDetailsPage implements OnInit {
       'home-outline': homeOutline,
       'sunny-outline': sunnyOutline,
       'time-outline': timeOutline,
+      'list-outline': listOutline,
+      'grid-outline': gridOutline,
     });
   }
 

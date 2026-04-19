@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 // Icons
 import { addIcons } from 'ionicons';
-import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline } from 'ionicons/icons';
+import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutline, listOutline, gridOutline } from 'ionicons/icons';
 
 @Component({
   selector: 'app-favourites',
@@ -19,6 +19,7 @@ export class FavouritesPage implements OnInit {
 
   favourites: any[] = [];
   sortOption: string = 'default';
+  viewMode: 'grid' | 'list' = 'grid';
 
   constructor() {
     addIcons({
@@ -28,6 +29,8 @@ export class FavouritesPage implements OnInit {
       'home-outline': homeOutline,
       'sunny-outline': sunnyOutline,
       'time-outline': timeOutline,
+      'list-outline': listOutline,
+      'grid-outline': gridOutline,
     });
   }
 

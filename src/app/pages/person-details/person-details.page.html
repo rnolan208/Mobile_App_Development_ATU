@@ -6,6 +6,12 @@
       <ion-button routerLink="/home">
         <ion-icon name="home-outline"></ion-icon>
       </ion-button>
+
+      <!-- Toggle Tile / List View for Movies -->
+      <ion-button (click)="viewMode = viewMode === 'grid' ? 'list' : 'grid'">
+        <ion-icon [name]="viewMode === 'grid' ? 'list-outline' : 'grid-outline'"></ion-icon>
+      </ion-button>
+      
     </ion-buttons>
 
     <!-- Title -->
