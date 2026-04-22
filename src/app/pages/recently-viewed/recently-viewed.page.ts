@@ -26,9 +26,6 @@ export class RecentlyViewedPage implements OnInit {
   sortOption: string = 'default';
   viewMode: 'grid' | 'list' = 'grid';
 
-  ionViewWillEnter() {
-    this.loadRecent();
-  }
 
   loadRecent() {
     this.recent = JSON.parse(localStorage.getItem('recentlyViewed') || '[]');
@@ -50,11 +47,8 @@ export class RecentlyViewedPage implements OnInit {
 
   ngOnInit() {
 
-    const saved = localStorage.getItem('viewMode');
-    if (saved) this.viewMode = saved as 'grid' | 'list';
-
+    // Load dark mode
     const darkMode = localStorage.getItem('darkMode');
-
     if (darkMode === 'true') {
       document.body.classList.add('dark');
     }
@@ -111,5 +105,13 @@ export class RecentlyViewedPage implements OnInit {
     this.navCtrl.back();
   }
 
+  ionViewWillEnter() {
+  this.loadRecent();
+
+  const savedView = localStorage.getItem('viewMode') as 'grid' | 'list';
+  if (savedView) {
+    this.viewMode = savedView;
+  }
+}
 
 }

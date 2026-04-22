@@ -40,23 +40,14 @@ export class FavouritesPage implements OnInit {
   }
 
   ngOnInit() {
-    this.loadFavourites();
-    this.sortMovies();
 
-    const saved = localStorage.getItem('viewMode');
-      if (saved) this.viewMode = saved as 'grid' | 'list';
-
+    // Load dark mode
     const darkMode = localStorage.getItem('darkMode');
-
     if (darkMode === 'true') {
       document.body.classList.add('dark');
     }
   }
 
-  ionViewWillEnter() {
-    // Reload page when page is refreshed
-    this.loadFavourites();
-  }
 
   loadFavourites() {
     this.favourites = JSON.parse(localStorage.getItem('favourites') || '[]');
@@ -71,7 +62,7 @@ export class FavouritesPage implements OnInit {
     localStorage.setItem('favourites', JSON.stringify(this.favourites));
   }
 
-    /* For applying Dark Mode Toggle */
+  /* For applying Dark Mode Toggle */
   toggleDarkMode() {
     const isDark = document.body.classList.toggle('dark');
     localStorage.setItem('darkMode', isDark ? 'true' : 'false');
@@ -104,13 +95,24 @@ export class FavouritesPage implements OnInit {
 
   /* Set Movie View - Tile or List */
   setView(mode: 'grid' | 'list') {
-  this.viewMode = mode;
-  localStorage.setItem('viewMode', mode);
-}
+    this.viewMode = mode;
+    localStorage.setItem('viewMode', mode);
+  }
 
-/* Go Back Button */
+  /* Go Back Button */
   goBack() {
     this.navCtrl.back();
+  }
+
+  //Save which view (grid or list) was selected for viewing the movies
+  ionViewWillEnter() {
+    // Reload page when page is refreshed
+    this.loadFavourites();
+
+    const savedView = localStorage.getItem('viewMode') as 'grid' | 'list';
+    if (savedView) {
+      this.viewMode = savedView;
+    }
   }
 
 }

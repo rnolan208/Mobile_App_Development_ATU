@@ -50,20 +50,20 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-    this.apiService.getTrendingMovies().subscribe((data: any) => {
-      this.movies = data.results;
-      console.log(this.movies);
-      this.sortMovies();
 
-      const saved = localStorage.getItem('viewMode');
-      if (saved) this.viewMode = saved as 'grid' | 'list';
-    });
-
+    // Load dark mode
     const darkMode = localStorage.getItem('darkMode');
-
     if (darkMode === 'true') {
       document.body.classList.add('dark');
     }
+
+    // Load movies
+    this.apiService.getTrendingMovies().subscribe((data: any) => {
+      this.movies = data.results;
+      this.sortMovies();
+    })
+
+    
   }
 
   /* Add or Remove from Favourites button */
@@ -157,6 +157,14 @@ export class HomePage implements OnInit {
   goBack() {
     this.navCtrl.back();
   }
+
+  //Save which view (grid or list) was selected for viewing the movies
+  ionViewWillEnter() {
+  const savedView = localStorage.getItem('viewMode') as 'grid' | 'list';
+  if (savedView) {
+    this.viewMode = savedView;
+  }
+}
 
 }
 
