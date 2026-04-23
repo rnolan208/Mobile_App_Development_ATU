@@ -52,7 +52,11 @@
       <ion-col size="12" size-md="4">
 
         <ion-card class="left-card">
-          <img *ngIf="movie?.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
+          <img *ngIf="movie.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
+
+          <div *ngIf="!movie.poster_path" class="no-image">
+            No Image Available
+          </div>
 
           <ion-card-header>
             <ion-card-title>{{ movie?.title }}</ion-card-title>

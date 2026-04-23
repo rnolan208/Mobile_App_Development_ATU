@@ -62,9 +62,12 @@
       <!-- IMAGE ONLY CLICKABLE -->
       <div class="clickable" [routerLink]="['/movie', movie.id]">
 
-        <img [src]="movie.poster_path 
-        ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path 
-        : 'https://via.placeholder.com/150'" />
+        <img *ngIf="movie.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
+
+        <div *ngIf="!movie.poster_path" class="no-image">
+          No Image Available
+        </div>
+
       </div>
 
       <div class="movie-info">
@@ -103,9 +106,12 @@
       <!-- IMAGE ONLY CLICKABLE -->
       <div class="clickable" [routerLink]="['/movie', movie.id]">
 
-        <img [src]="movie.poster_path 
-        ? 'https://image.tmdb.org/t/p/w500' + movie.poster_path 
-        : 'https://via.placeholder.com/150'" />
+        <img *ngIf="movie.poster_path" [src]="'https://image.tmdb.org/t/p/w500' + movie.poster_path" />
+
+        <div *ngIf="!movie.poster_path" class="no-image">
+          No Image Available
+        </div>
+        
       </div>
 
       <div class="movie-info">
