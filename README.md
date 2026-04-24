@@ -1,7 +1,6 @@
 # Movie App – ATU 2026
-<!--
+
 ![Status](https://img.shields.io/badge/status-Completed-brightgreen)
--->
 ![Platform](https://img.shields.io/badge/platform-Ionic-blue)
 ![Framework](https://img.shields.io/badge/framework-Angular-red)
 ![Language](https://img.shields.io/badge/language-TypeScript-blue)
@@ -49,7 +48,7 @@ This project is a mobile-first movie browsing application developed using Ionic 
 ---
 
 ## Images
-<!-- 
+
 ### Home Page (Grid View)
 ![Home Grid](images/home-page-grid.png)
 *Figure 1: Home Page Layout*
@@ -77,7 +76,7 @@ This project is a mobile-first movie browsing application developed using Ionic 
 ### Dark Mode
 ![Dark Mode](images/dark-mode-search.png)
 *Figure 7: Dark Mode Layout*
--->
+
 ---
 
 ## How to Run
