@@ -177,9 +177,11 @@ body.dark .movie-list-item {
 
 /* DESCRIPTION */
 .movie-info p {
-  flex: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  /* limit to 3 lines */
+  -webkit-box-orient: vertical;
   overflow: hidden;
-  align-content: center;
 }
 
 /* BUTTONS */
@@ -190,6 +192,7 @@ body.dark .movie-list-item {
   margin-top: auto;
 }
 
+/* MOBILE SCREEN LAYOUT */
 @media (max-width: 767px) {
   .movie-list .clickable {
     flex-direction: column;
@@ -198,7 +201,24 @@ body.dark .movie-list-item {
 
   .movie-list img {
     width: 100%;
-    height: auto;
+    max-height: 250px;
+    object-fit: cover;
+  }
+
+  .movie-actions {
+    flex-direction: column;
+  }
+
+  .movie-list-item {
+    flex-direction: column;
+  }
+
+  .movie-list-item .clickable {
+    width: 100%;
+  }
+
+  .movie-info {
+    padding-top: 10px;
   }
 
   .movie-actions {

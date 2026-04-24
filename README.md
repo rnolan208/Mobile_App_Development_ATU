@@ -51,31 +51,31 @@ This project is a mobile-first movie browsing application developed using Ionic 
 ## Images
 <!-- 
 ### Home Page (Grid View)
-![Home Grid](images/home-grid.png)
+![Home Grid](images/home-page-grid.png)
 *Figure 1: Home Page Layout*
 
 ### List View
-![List View](images/list-view.png)
+![List View](images/home-page-list.png)
 *Figure 2: Movies In List View*
 
 ### Movie Details
-![Details](images/details.png)
+![Details](images/movie-details.png)
 *Figure 3: Movie Details Page*
 
 ### Person Details - Cast & Crew
-![Details](images/details.png)
+![Details](images/person-details.png)
 *Figure 4: Person Details Page*
 
 ### Recently Viewed
-![Details](images/details.png)
+![Details](images/recently-viewed.png)
 *Figure 5: Recently Viewed Page*
 
 ### Favourites
-![Details](images/details.png)
+![Details](images/favourites.png)
 *Figure 6: Favourites Page*
 
 ### Dark Mode
-![Dark Mode](images/dark-mode.png)
+![Dark Mode](images/dark-mode-search.png)
 *Figure 7: Dark Mode Layout*
 -->
 ---
@@ -168,6 +168,7 @@ src/
 │   ├── services/
 │   │   ├── api.service.ts
 │   │   ├── api.ts
+│   │   ├── storage.ts
 │
 │   ├── app.component.ts
 │   ├── app.routes.ts
