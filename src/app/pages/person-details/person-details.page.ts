@@ -15,6 +15,9 @@ import { ApiService } from '../../services/api.service';
 // Go Back Button via Navcontroller
 import { NavController } from '@ionic/angular';
 
+// Storage Service
+import { StorageService } from '../../services/storage';
+
 @Component({
   selector: 'app-person-details',
   templateUrl: './person-details.page.html',
@@ -32,6 +35,7 @@ export class PersonDetailsPage implements OnInit {
     private route: ActivatedRoute,
     private apiService: ApiService,
     private navCtrl: NavController,
+    private storage: StorageService
   ) {
     addIcons({
       'moon-outline': moonOutline,
@@ -49,6 +53,9 @@ export class PersonDetailsPage implements OnInit {
   ngOnInit() {
     const id = this.route.snapshot.paramMap.get('id');
 
+    this.storage.loadDarkMode();
+    this.viewMode = this.storage.getViewMode();
+
     if (id) {
       this.apiService.getPersonDetails(id).subscribe((data: any) => {
         this.person = data;
@@ -58,53 +65,39 @@ export class PersonDetailsPage implements OnInit {
         this.movies = data.cast;
       });
     }
-
-    const darkMode = localStorage.getItem('darkMode');
-
-    if (darkMode === 'true') {
-      document.body.classList.add('dark');
-    }
   }
+
+  ionViewWillEnter() {
+    this.viewMode = this.storage.getViewMode();
+  }
+
 
   /* Add or Remove from Favourites button */
   toggleFavourite(movie: any, event?: Event) {
-    if (event) {
-      event.stopPropagation();
-    }
-
-    let favourites = JSON.parse(localStorage.getItem('favourites') || '[]');
-
-    const index = favourites.findIndex((m: any) => m.id === movie.id);
-
-    if (index > -1) {
-      // REMOVE
-      favourites.splice(index, 1);
-    } else {
-      // ADD
-      favourites.push(movie);
-    }
-
-    localStorage.setItem('favourites', JSON.stringify(favourites));
+    if (event) event.stopPropagation();
+    this.storage.toggleFavourite(movie);
   }
 
   isFavourite(movieId: number): boolean {
-    const favourites = JSON.parse(localStorage.getItem('favourites') || '[]');
-    return favourites.some((m: any) => m.id === movieId);
+    return this.storage.isFavourite(movieId);
   }
 
-
-  /* For applying Dark Mode Toggle */
+  // DARK MODE
   toggleDarkMode() {
-    const isDark = document.body.classList.toggle('dark');
-    localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+    this.storage.toggleDarkMode();
   }
 
-  /* Change Icon in Dark Mode */
   isDarkMode(): boolean {
-    return document.body.classList.contains('dark');
+    return this.storage.isDarkMode();
   }
 
-  /* Go Back Button */
+  //  VIEW MODE 
+  setView(mode: 'grid' | 'list') {
+    this.viewMode = mode;
+    this.storage.setViewMode(mode);
+  }
+
+  // NAVIGATION
   goBack() {
     this.navCtrl.back();
   }

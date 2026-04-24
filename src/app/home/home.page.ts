@@ -14,6 +14,9 @@ import { ApiService } from '../services/api.service';
 // Go Back Button via Navcontroller
 import { NavController } from '@ionic/angular';
 
+// Storage Service
+import { StorageService } from '../services/storage';
+
 
 @Component({
   selector: 'app-home',
@@ -34,7 +37,7 @@ export class HomePage implements OnInit {
   sortOption: string = 'default';
   viewMode: 'grid' | 'list' = 'grid';
 
-  constructor(private apiService: ApiService, private navCtrl: NavController) {
+  constructor(private apiService: ApiService, private navCtrl: NavController, private storage: StorageService,) {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline,
@@ -50,65 +53,47 @@ export class HomePage implements OnInit {
   }
 
   ngOnInit() {
-
-    // Load dark mode
-    const darkMode = localStorage.getItem('darkMode');
-    if (darkMode === 'true') {
-      document.body.classList.add('dark');
-    }
+    // Load global settings
+    this.storage.loadDarkMode();
+    this.viewMode = this.storage.getViewMode();
 
     // Load movies
     this.apiService.getTrendingMovies().subscribe((data: any) => {
       this.movies = data.results;
       this.sortMovies();
-    })
-
-    
+    });
   }
 
-  /* Add or Remove from Favourites button */
+  //Save which view (grid or list) was selected for viewing the movies
+  ionViewWillEnter() {
+    this.viewMode = this.storage.getViewMode();
+  }
+
+  // Add or Remove from Favourites button 
   toggleFavourite(movie: any, event?: Event) {
     if (event) {
       event.stopPropagation();
+      this.storage.toggleFavourite(movie);
     }
-
-    let favourites = JSON.parse(localStorage.getItem('favourites') || '[]');
-
-    const index = favourites.findIndex((m: any) => m.id === movie.id);
-
-    if (index > -1) {
-      // REMOVE
-      favourites.splice(index, 1);
-    } else {
-      // ADD
-      favourites.push(movie);
-    }
-
-    localStorage.setItem('favourites', JSON.stringify(favourites));
   }
 
   isFavourite(movieId: number): boolean {
-    const favourites = JSON.parse(localStorage.getItem('favourites') || '[]');
-    return favourites.some((m: any) => m.id === movieId);
+    return this.storage.isFavourite(movieId);
   }
 
-
-  /* For applying Dark Mode Toggle */
+  // Dark Mode
   toggleDarkMode() {
-    const isDark = document.body.classList.toggle('dark');
-    localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+    this.storage.toggleDarkMode();
   }
 
-  /* Change Icon in Dark Mode */
   isDarkMode(): boolean {
-    return document.body.classList.contains('dark');
+    return this.storage.isDarkMode();
   }
 
-  /* For Search Function */
+  // Search
   onSearch() {
-    if (this.searchTerm && this.searchTerm.trim() !== '') {
-
-      this.pageTitle = `Search Results for "${this.searchTerm}"`; // update title with whats been searched
+    if (this.searchTerm.trim()) {
+      this.pageTitle = `Search Results for "${this.searchTerm}"`;
 
       this.apiService.searchMovies(this.searchTerm).subscribe((data: any) => {
         this.movies = data.results;
@@ -116,20 +101,17 @@ export class HomePage implements OnInit {
       });
 
     } else {
-
-      this.pageTitle = "Today's Trending Movies"; // reset title to original
+      this.pageTitle = "Today's Trending Movies";
 
       this.apiService.getTrendingMovies().subscribe((data: any) => {
         this.movies = data.results;
         this.sortMovies();
       });
-
     }
   }
 
-  /* For Sorting Search Option */
+  // Sort
   sortMovies() {
-
     if (this.sortOption === 'az') {
       this.movies.sort((a, b) => a.title.localeCompare(b.title));
     }
@@ -139,35 +121,29 @@ export class HomePage implements OnInit {
     }
 
     if (this.sortOption === 'dateAsc') {
-      this.movies.sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime());
+      this.movies.sort((a, b) =>
+        new Date(a.release_date).getTime() - new Date(b.release_date).getTime()
+      );
     }
 
     if (this.sortOption === 'dateDesc') {
-      this.movies.sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
+      this.movies.sort((a, b) =>
+        new Date(b.release_date).getTime() - new Date(a.release_date).getTime()
+      );
     }
   }
 
-  /* Set Movie View - Tile or List */
+  // View Mode
   setView(mode: 'grid' | 'list') {
     this.viewMode = mode;
-    localStorage.setItem('viewMode', mode);
+    this.storage.setViewMode(mode);
   }
 
-  /* Go Back Button */
+  // Navbar
   goBack() {
     this.navCtrl.back();
   }
-
-  //Save which view (grid or list) was selected for viewing the movies
-  ionViewWillEnter() {
-  const savedView = localStorage.getItem('viewMode') as 'grid' | 'list';
-  if (savedView) {
-    this.viewMode = savedView;
-  }
 }
-
-}
-
 
 
 

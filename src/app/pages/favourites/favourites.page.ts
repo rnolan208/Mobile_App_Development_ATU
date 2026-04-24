@@ -11,6 +11,9 @@ import { moonOutline, heartOutline, heart, homeOutline, sunnyOutline, timeOutlin
 // Go Back Button via Navcontroller
 import { NavController } from '@ionic/angular';
 
+// Storage Service
+import { StorageService } from '../../services/storage';
+
 @Component({
   selector: 'app-favourites',
   templateUrl: './favourites.page.html',
@@ -25,7 +28,7 @@ export class FavouritesPage implements OnInit {
   viewMode: 'grid' | 'list' = 'grid';
   movies: any[] = [];
 
-  constructor(private navCtrl: NavController) {
+  constructor(private navCtrl: NavController, private storage: StorageService) {
     addIcons({
       'moon-outline': moonOutline,
       'heart-outline': heartOutline,
@@ -40,42 +43,40 @@ export class FavouritesPage implements OnInit {
   }
 
   ngOnInit() {
-
-    // Load dark mode
-    const darkMode = localStorage.getItem('darkMode');
-    if (darkMode === 'true') {
-      document.body.classList.add('dark');
-    }
+    this.storage.loadDarkMode();
+    this.viewMode = this.storage.getViewMode();
   }
 
+  ionViewWillEnter() {
+    this.loadFavourites();
+    this.viewMode = this.storage.getViewMode();
+  }
 
+  // Favourites
   loadFavourites() {
-    this.favourites = JSON.parse(localStorage.getItem('favourites') || '[]');
+    this.favourites = this.storage.getFavourites();
+    this.sortMovies();
   }
 
   removeFavourite(movieId: number, event?: Event) {
-    if (event) {
-      event.stopPropagation();
-    }
+    if (event) event.stopPropagation();
 
-    this.favourites = this.favourites.filter(m => m.id !== movieId);
-    localStorage.setItem('favourites', JSON.stringify(this.favourites));
+    this.storage.removeFavourite(movieId);
+    this.loadFavourites(); // refresh list
   }
 
-  /* For applying Dark Mode Toggle */
+  // Dark Mode
   toggleDarkMode() {
-    const isDark = document.body.classList.toggle('dark');
-    localStorage.setItem('darkMode', isDark ? 'true' : 'false');
+    this.storage.toggleDarkMode();
   }
 
-  /* Change Icon in Dark Mode */
   isDarkMode(): boolean {
-    return document.body.classList.contains('dark');
+    return this.storage.isDarkMode();
   }
 
-  /* For Sorting Option */
-  sortMovies() {
 
+  // Sort
+  sortMovies() {
     if (this.sortOption === 'az') {
       this.favourites.sort((a, b) => a.title.localeCompare(b.title));
     }
@@ -85,34 +86,26 @@ export class FavouritesPage implements OnInit {
     }
 
     if (this.sortOption === 'dateAsc') {
-      this.favourites.sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime());
+      this.favourites.sort((a, b) =>
+        new Date(a.release_date).getTime() - new Date(b.release_date).getTime()
+      );
     }
 
     if (this.sortOption === 'dateDesc') {
-      this.favourites.sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime());
+      this.favourites.sort((a, b) =>
+        new Date(b.release_date).getTime() - new Date(a.release_date).getTime()
+      );
     }
   }
 
-  /* Set Movie View - Tile or List */
+  //  VIEW MODE 
   setView(mode: 'grid' | 'list') {
     this.viewMode = mode;
-    localStorage.setItem('viewMode', mode);
+    this.storage.setViewMode(mode);
   }
 
-  /* Go Back Button */
+  // NAVIGATION
   goBack() {
     this.navCtrl.back();
   }
-
-  //Save which view (grid or list) was selected for viewing the movies
-  ionViewWillEnter() {
-    // Reload page when page is refreshed
-    this.loadFavourites();
-
-    const savedView = localStorage.getItem('viewMode') as 'grid' | 'list';
-    if (savedView) {
-      this.viewMode = savedView;
-    }
-  }
-
 }
